@@ -7,7 +7,7 @@
 ---
 
 ## 🔗 Live Demo
-*Link to your deployed application here, e.g., [https://tourgaze-demo.vercel.app](https://tourgaze-demo.vercel.app)*
+*Link - https://tour-gaze.vercel.app/*
 
 ---
 
