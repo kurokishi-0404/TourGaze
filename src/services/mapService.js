@@ -318,7 +318,10 @@ export const fetchAttractions = async (lat, lng, radiusMeters = 5000) => {
     const res = await fetch("https://overpass-api.de/api/interpreter", {
       method: "POST",
       body: `data=${encodeURIComponent(query)}`,
-      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      headers: { 
+        "Content-Type": "application/x-www-form-urlencoded",
+        "Accept": "application/json"
+      },
     });
     const data = await res.json();
 
