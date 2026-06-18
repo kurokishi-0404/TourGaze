@@ -315,15 +315,24 @@ export const fetchAttractions = async (lat, lng, radiusMeters = 5000) => {
   `;
 
   try {
-    const res = await fetch("https://overpass-api.de/api/interpreter", {
-      method: "POST",
-      body: `data=${encodeURIComponent(query)}`,
-      headers: { 
-        "Content-Type": "application/x-www-form-urlencoded",
-        "Accept": "application/json"
-      },
-    });
-    const data = await res.json();
+    let data;
+
+    if (import.meta.env.DEV) {
+      // Local development fallback to avoid needing Vercel CLI locally
+      const res = await fetch("https://overpass-api.de/api/interpreter", {
+        method: "POST",
+        body: `data=${encodeURIComponent(query)}`,
+        headers: { 
+          "Content-Type": "application/x-www-form-urlencoded",
+          "Accept": "application/json"
+        },
+      });
+      data = await res.json();
+    } else {
+      // Production Vercel Serverless Function
+      const res = await fetch(`/api/attractions?lat=${lat}&lng=${lng}&radius=${radiusMeters}`);
+      data = await res.json();
+    }
 
     const results = (data.elements || [])
       .filter((el) => el.tags && el.tags.name)
