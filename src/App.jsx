@@ -1,5 +1,5 @@
 import React from "react";
-import { HashRouter, Routes, Route } from "react-router-dom";
+import { HashRouter, Routes, Route, Navigate } from "react-router-dom";
 import { AppProvider } from "./context/AppContext";
 
 // Layout components
@@ -20,7 +20,51 @@ import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import Profile from "./pages/Profile";
 import About from "./pages/About";
+import AdminDashboard from "./pages/AdminDashboard";
+import AdminLogin from "./pages/AdminLogin";
+import { useApp } from "./context/AppContext";
 
+// Protected Route Component
+const ProtectedRoute = ({ element, allowedRoles }) => {
+  const { user } = useApp();
+
+  if (!user) {
+    return <Navigate to={allowedRoles.includes("admin") ? "/admin-login" : "/login"} replace />;
+  }
+
+  if (allowedRoles && !allowedRoles.includes(user.role)) {
+    return <Navigate to={user.role === "admin" ? "/admin" : "/"} replace />;
+  }
+
+  return element;
+};
+
+function AppRoutes() {
+  return (
+    <Routes>
+      <Route path="/" element={<Home />} />
+      <Route path="/packages" element={<ExplorePackages />} />
+      <Route path="/planner" element={<TripPlanner />} />
+      <Route path="/map" element={<TravelMap />} />
+      <Route path="/reviews" element={<Reviews />} />
+      <Route path="/rules" element={<RulesHub />} />
+      <Route path="/about" element={<About />} />
+      
+      {/* Auth Routes */}
+      <Route path="/login" element={<Login />} />
+      <Route path="/signup" element={<Signup />} />
+      <Route path="/admin-login" element={<AdminLogin />} />
+
+      {/* User Protected Routes */}
+      <Route path="/dashboard" element={<ProtectedRoute element={<BookingDashboard />} allowedRoles={["user"]} />} />
+      <Route path="/profile" element={<ProtectedRoute element={<Profile />} allowedRoles={["user"]} />} />
+      <Route path="/wishlist" element={<ProtectedRoute element={<Wishlist />} allowedRoles={["user"]} />} />
+
+      {/* Admin Protected Routes */}
+      <Route path="/admin" element={<ProtectedRoute element={<AdminDashboard />} allowedRoles={["admin"]} />} />
+    </Routes>
+  );
+}
 function App() {
   return (
     <AppProvider>
@@ -31,20 +75,7 @@ function App() {
           
           {/* Core Page content wrapper */}
           <main className="flex-grow">
-            <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path="/packages" element={<ExplorePackages />} />
-              <Route path="/planner" element={<TripPlanner />} />
-              <Route path="/map" element={<TravelMap />} />
-              <Route path="/dashboard" element={<BookingDashboard />} />
-              <Route path="/reviews" element={<Reviews />} />
-              <Route path="/rules" element={<RulesHub />} />
-              <Route path="/wishlist" element={<Wishlist />} />
-              <Route path="/login" element={<Login />} />
-              <Route path="/signup" element={<Signup />} />
-              <Route path="/profile" element={<Profile />} />
-              <Route path="/about" element={<About />} />
-            </Routes>
+            <AppRoutes />
           </main>
 
           {/* Floaters and Widgets */}
@@ -57,5 +88,7 @@ function App() {
     </AppProvider>
   );
 }
+
+
 
 export default App;

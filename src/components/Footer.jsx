@@ -52,6 +52,9 @@ const Footer = () => {
               <li>
                 <Link to="/reviews" className="hover:text-blue-400 transition">Customer Reviews</Link>
               </li>
+              <li>
+                <Link to="/admin" className="hover:text-blue-400 transition">Admin Dashboard</Link>
+              </li>
             </ul>
           </div>
 
@@ -59,6 +62,9 @@ const Footer = () => {
           <div>
             <h4 className="font-bold text-white text-sm mb-4">Support</h4>
             <ul className="space-y-2.5 text-xs text-slate-400">
+              <li>
+                <Link to="/rules" className="hover:text-blue-400 transition">Agency Rules Hub</Link>
+              </li>
               <li>
                 <Link to="/rules" className="hover:text-blue-400 transition">Visa Requirements</Link>
               </li>

@@ -56,7 +56,8 @@ export const AppProvider = ({ children }) => {
       membership: "Gold Explorer",
       countriesVisited: 14,
       tripsCompleted: 23,
-      reviewsGiven: 12
+      reviewsGiven: 12,
+      role: "user"
     };
   });
 
@@ -111,6 +112,24 @@ export const AppProvider = ({ children }) => {
     setCustomTrips(loadUserData(email, "tourgaze_custom_trips", []));
   };
 
+  const [activityLogs, setActivityLogs] = useState(() => {
+    const saved = localStorage.getItem("tourgaze_activity_logs");
+    return saved ? JSON.parse(saved) : [];
+  });
+
+  useEffect(() => {
+    localStorage.setItem("tourgaze_activity_logs", JSON.stringify(activityLogs));
+  }, [activityLogs]);
+
+  const addActivityLog = (message) => {
+    const log = {
+      id: Date.now(),
+      time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true }),
+      message
+    };
+    setActivityLogs(prev => [log, ...prev]);
+  };
+
   const login = (email, password) => {
     // Basic mock authentication
     const mockUser = {
@@ -121,10 +140,28 @@ export const AppProvider = ({ children }) => {
       membership: "Silver Explorer",
       countriesVisited: 2,
       tripsCompleted: 1,
-      reviewsGiven: 0
+      reviewsGiven: 0,
+      role: "user"
     };
     setUser(mockUser);
     syncUserData(mockUser.email);
+    addActivityLog(`User logged in: ${mockUser.email}`);
+    return true;
+  };
+
+  const adminLogin = (adminId, password) => {
+    const mockAdmin = {
+      name: "System Admin",
+      email: adminId,
+      avatar: "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=150&q=80",
+      role: "admin"
+    };
+    setUser(mockAdmin);
+    // Admins see global data, not user specific. We could clear user-specific states but we want to see global bookings.
+    // In our simplified app, bookings are global if we want the admin to see them.
+    // For this refactor, we will consider `bookings` as global for the admin, but users only see their own.
+    // Since this is a frontend demo, we'll keep bookings global in the context but filtering will happen in components if needed.
+    // Actually, let's keep all bookings in `bookings` state, but associate them with `customerName`.
     return true;
   };
 
@@ -137,10 +174,12 @@ export const AppProvider = ({ children }) => {
       membership: "New Adventurer",
       countriesVisited: 0,
       tripsCompleted: 0,
-      reviewsGiven: 0
+      reviewsGiven: 0,
+      role: "user"
     };
     setUser(mockUser);
     syncUserData(mockUser.email);
+    addActivityLog(`New account created: ${email}`);
     return true;
   };
 
@@ -186,8 +225,9 @@ export const AppProvider = ({ children }) => {
 
   const addBooking = (newBooking) => {
     const bookingWithId = {
-      id: `bk-${Math.floor(100 + Math.random() * 900)}`,
+      id: `BK-${Math.floor(100 + Math.random() * 900)}`,
       status: "Pending",
+      customerName: user?.name || "Guest User",
       ...newBooking
     };
     setBookings(prev => [bookingWithId, ...prev]);
@@ -196,6 +236,7 @@ export const AppProvider = ({ children }) => {
       ...prev,
       [bookingWithId.id]: []
     }));
+    addActivityLog(`Booking ${bookingWithId.id} created for ${bookingWithId.packageName}`);
     return bookingWithId;
   };
 
@@ -215,6 +256,10 @@ export const AppProvider = ({ children }) => {
 
     // 3. Apply changes to active bookings
     setBookings(prev => prev.map(b => b.id === bookingId ? { ...b, ...updatedFields } : b));
+
+    if (updatedFields.status) {
+      addActivityLog(`Booking ${bookingId} status updated to ${updatedFields.status}`);
+    }
   };
 
   const undoBookingChange = (bookingId) => {
@@ -245,50 +290,11 @@ export const AppProvider = ({ children }) => {
       return newHistory;
     });
     setBookings(prev => prev.filter(b => b.id !== bookingId));
+    addActivityLog(`Booking ${bookingId} was cancelled`);
   };
 
-  // 5. Booking Queue Admin Simulation
-  const [bookingQueue, setBookingQueue] = useState([
-    { queueId: "Q-802", user: "Vikram Sen", package: "Tokyo & Kyoto Wonders", status: "Processing" },
-    { queueId: "Q-803", user: "Zoe Chen", package: "European Grand Tour", status: "Verifying Visa" },
-    { queueId: "Q-804", user: "Liam Peterson", package: "Swiss Alps & Lakes", status: "Allocating Flights" },
-    { queueId: "Q-805", user: "Priyantha Kumara", package: "Bali Island Getaway", status: "Awaiting Payment" }
-  ]);
+  // Queue removed as per refactor. We'll use actual bookings.
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      // Simulate live booking additions or updates
-      setBookingQueue(prev => {
-        const statuses = ["Processing", "Verifying Visa", "Allocating Flights", "Awaiting Payment", "Generating Tickets"];
-        const randomNames = ["Sophia Rossi", "Rahul Nair", "Nils Lindqvist", "Elena Petrova", "Omar Al-Mansoori"];
-        const randomPackages = ["European Grand Tour", "Tokyo & Kyoto Wonders", "Arabian Desert Luxuries", "Swiss Alps & Lakes Scenic"];
-
-        // Randomly update status of an existing item OR append a new one
-        if (Math.random() > 0.5 && prev.length > 0) {
-          const indexToChange = Math.floor(Math.random() * prev.length);
-          return prev.map((item, idx) => {
-            if (idx === indexToChange) {
-              const currentIdx = statuses.indexOf(item.status);
-              const nextStatus = statuses[(currentIdx + 1) % statuses.length];
-              return { ...item, status: nextStatus };
-            }
-            return item;
-          });
-        } else {
-          const newQueueId = `Q-${Math.floor(806 + Math.random() * 200)}`;
-          const newRequest = {
-            queueId: newQueueId,
-            user: randomNames[Math.floor(Math.random() * randomNames.length)],
-            package: randomPackages[Math.floor(Math.random() * randomPackages.length)],
-            status: "Processing"
-          };
-          return [...prev.slice(-6), newRequest]; // Keep max 6 items
-        }
-      });
-    }, 15000); // Trigger every 15 seconds
-
-    return () => clearInterval(interval);
-  }, []);
 
   // 6. User Reviews
   const [reviews, setReviews] = useState(() => {
@@ -352,6 +358,7 @@ export const AppProvider = ({ children }) => {
         // Auth
         user,
         login,
+        adminLogin,
         signup,
         logout,
         updateProfile,
@@ -380,7 +387,8 @@ export const AppProvider = ({ children }) => {
         updateBooking,
         undoBookingChange,
         cancelBooking,
-        bookingQueue,
+        activityLogs,
+        addActivityLog,
 
         // Custom Multi-City Trips
         customTrips,

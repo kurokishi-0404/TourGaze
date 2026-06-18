@@ -27,12 +27,12 @@ const Login = () => {
     }
 
     login(email, password);
-    navigate("/profile");
+    navigate("/dashboard");
   };
 
   const handleGoogleLogin = () => {
     login("explorer.demo@gmail.com", "google-sso-bypass");
-    navigate("/profile");
+    navigate("/dashboard");
   };
 
   return (
