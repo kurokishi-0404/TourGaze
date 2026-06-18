@@ -1,16 +1,46 @@
-# React + Vite
+# 🌍 TourGaze
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+**TourGaze** is a modern, full-featured international travel platform and interactive route planner. Built with React and Vite, it offers an elegant, glassmorphism-inspired UI allowing users to discover destinations, plan multi-city trips, and track bookings—all from a single, seamless application.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## ✨ Features
 
-## React Compiler
+- **Intelligent Route Planning:** Search for flights, optimize routes, and estimate total travel costs.
+- **Interactive Travel Map:** Visualizes your flight paths and itineraries using **MapLibre GL JS** and the **OpenRouteService** API.
+- **Dynamic Package Discovery:** Explore curated travel packages and global hotspots with a modern, responsive card interface.
+- **Booking Dashboard:** A unified hub to manage your reservations, wishlist, and profile settings.
+- **Stunning UI/UX:** Built using Tailwind CSS, featuring glassmorphism overlays, fluid `framer-motion` animations, and beautiful typography.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## 🛠️ Technology Stack
 
-## Expanding the ESLint configuration
+- **Framework:** React 19 + Vite 8
+- **Styling:** Tailwind CSS v4
+- **Routing:** React Router DOM
+- **Maps & Geo:** MapLibre GL, OpenRouteService, Nominatim (OpenStreetMap)
+- **State Management:** React Context API + LocalStorage
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## 🚀 Getting Started
+
+Follow these steps to run the application locally:
+
+### 1. Clone the repository
+```bash
+git clone https://github.com/your-username/TourGaze.git
+cd TourGaze
+```
+
+### 2. Install Dependencies
+```bash
+npm install
+```
+
+### 3. Run the Development Server
+```bash
+npm run dev
+```
+
+Navigate to `http://localhost:5173` to view the application in your browser.
+
+---
+*Created as part of an advanced agentic UI/UX development session.*
