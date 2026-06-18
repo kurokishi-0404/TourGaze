@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useLocation } from "react-router-dom";
 import { useApp } from "../context/AppContext";
 import { FiDollarSign, FiRefreshCw, FiChevronUp, FiChevronDown, FiX } from "react-icons/fi";
 import { motion, AnimatePresence } from "framer-motion";
@@ -7,6 +8,10 @@ const CurrencyWidget = () => {
   const { activeCurrency, setActiveCurrency, exchangeRates, currencySymbols } = useApp();
   const [isOpen, setIsOpen] = useState(false);
   const [amount, setAmount] = useState("1000");
+  const location = useLocation();
+
+  // Hide widget on admin portal to prevent overlap with admin sidebar
+  if (location.pathname.startsWith("/admin")) return null;
 
   const currencies = [
     { code: "USD", name: "US Dollar", symbol: "$" },

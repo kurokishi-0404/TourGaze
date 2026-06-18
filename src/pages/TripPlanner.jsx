@@ -263,31 +263,34 @@ const TripPlanner = () => {
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs">
               <div>
-                <label className="text-[10px] uppercase font-bold text-slate-400 block mb-1.5">Trip Name</label>
+                <label htmlFor="trip-name" className="text-[10px] uppercase font-bold text-slate-400 block mb-1.5">Trip Name</label>
                 <input
+                  id="trip-name"
                   type="text"
                   value={tripName}
                   onChange={(e) => setTripName(e.target.value)}
-                  className="w-full bg-slate-50 border border-slate-200 rounded-xl py-2 px-3 font-semibold text-slate-700 focus:outline-none focus:border-blue-500 focus:bg-white"
+                  className="w-full bg-slate-50 border border-slate-200 rounded-xl py-3 px-3 font-semibold text-slate-700 focus:outline-none focus:border-blue-500 focus:bg-white"
                 />
               </div>
 
               <div>
-                <label className="text-[10px] uppercase font-bold text-slate-400 block mb-1.5">Departure Date</label>
+                <label htmlFor="departure-date" className="text-[10px] uppercase font-bold text-slate-400 block mb-1.5">Departure Date</label>
                 <input
+                  id="departure-date"
                   type="date"
                   value={travelDate}
                   onChange={(e) => setTravelDate(e.target.value)}
-                  className="w-full bg-slate-50 border border-slate-200 rounded-xl py-2 px-3 font-semibold text-slate-700 focus:outline-none focus:border-blue-500 focus:bg-white"
+                  className="w-full bg-slate-50 border border-slate-200 rounded-xl py-3 px-3 font-semibold text-slate-700 focus:outline-none focus:border-blue-500 focus:bg-white"
                 />
               </div>
 
               <div>
-                <label className="text-[10px] uppercase font-bold text-slate-400 block mb-1.5">Starting From</label>
+                <label htmlFor="starting-point" className="text-[10px] uppercase font-bold text-slate-400 block mb-1.5">Starting From</label>
                 <select
+                  id="starting-point"
                   value={startPoint}
                   onChange={(e) => setStartPoint(e.target.value)}
-                  className="w-full bg-slate-50 border border-slate-200 rounded-xl py-2 px-3 font-semibold text-slate-700 focus:outline-none focus:border-blue-500 focus:bg-white"
+                  className="w-full bg-slate-50 border border-slate-200 rounded-xl py-3 px-3 font-semibold text-slate-700 focus:outline-none focus:border-blue-500 focus:bg-white"
                 >
                   {citiesList.map(c => (
                     <option key={c} value={c}>{c}</option>
@@ -321,9 +324,10 @@ const TripPlanner = () => {
 
               <div className="flex items-center space-x-2 max-w-xs">
                 <select
+                  aria-label="Select City to Add"
                   value={selectedCityToAdd}
                   onChange={(e) => setSelectedCityToAdd(e.target.value)}
-                  className="bg-slate-50 border border-slate-200 rounded-xl py-2 px-3 font-semibold text-slate-700 focus:outline-none focus:border-blue-500 focus:bg-white flex-1"
+                  className="bg-slate-50 border border-slate-200 rounded-xl py-3 px-3 font-semibold text-slate-700 focus:outline-none focus:border-blue-500 focus:bg-white flex-1"
                 >
                   {citiesList
                     .filter(c => c !== startPoint && !stops.includes(c))
@@ -334,7 +338,7 @@ const TripPlanner = () => {
                 <button
                   type="button"
                   onClick={handleAddStop}
-                  className="px-4 py-2 bg-slate-800 text-white font-bold rounded-xl hover:bg-slate-900 transition flex items-center space-x-1"
+                  className="px-4 py-3 bg-slate-800 text-white font-bold rounded-xl hover:bg-slate-900 transition flex items-center space-x-1"
                 >
                   <FiPlus className="w-4 h-4" />
                   <span>Add</span>
@@ -412,14 +416,15 @@ const TripPlanner = () => {
                       {/* Hotel selector */}
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs pt-3 border-t border-slate-100">
                         <div>
-                          <label className="text-[10px] uppercase font-bold text-slate-400 block mb-1.5">Premium Hotel Lodging</label>
+                          <label htmlFor={`hotel-select-${idx}`} className="text-[10px] uppercase font-bold text-slate-400 block mb-1.5">Premium Hotel Lodging</label>
                           <select
+                            id={`hotel-select-${idx}`}
                             value={selectedHotelName}
                             onChange={(e) => setHotelSelections({
                               ...hotelSelections,
                               [city]: e.target.value
                             })}
-                            className="w-full bg-slate-50 border border-slate-200 rounded-xl py-2 px-3 font-semibold text-slate-700 focus:outline-none focus:border-blue-500"
+                            className="w-full bg-slate-50 border border-slate-200 rounded-xl py-3 px-3 font-semibold text-slate-700 focus:outline-none focus:border-blue-500"
                           >
                             {hotels.map(h => (
                               <option key={h.name} value={h.name}>

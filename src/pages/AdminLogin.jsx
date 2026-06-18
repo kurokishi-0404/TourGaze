@@ -57,16 +57,17 @@ const AdminLogin = () => {
           
           {/* Admin ID */}
           <div>
-            <label className="text-[10px] uppercase font-bold text-slate-500 block mb-1.5">Admin ID</label>
+            <label htmlFor="admin-id" className="text-[10px] uppercase font-bold text-slate-400 block mb-1.5">Admin ID</label>
             <div className="relative flex items-center">
               <FiShield className="absolute left-3.5 text-slate-400 w-4 h-4" />
               <input
+                id="admin-id"
                 type="text"
                 required
                 placeholder="e.g. ADM-101"
                 value={adminId}
                 onChange={(e) => setAdminId(e.target.value)}
-                className="w-full bg-slate-50 border border-slate-200 rounded-xl py-2.5 pl-10 pr-3 font-semibold text-slate-800 focus:outline-none focus:border-slate-500 focus:bg-white"
+                className="w-full bg-slate-50 border border-slate-200 rounded-xl py-3 pl-10 pr-3 font-semibold text-slate-700 focus:outline-none focus:border-blue-500 focus:bg-white transition-colors"
               />
             </div>
           </div>
@@ -74,17 +75,18 @@ const AdminLogin = () => {
           {/* Password */}
           <div>
             <div className="flex justify-between items-center mb-1.5">
-              <label className="text-[10px] uppercase font-bold text-slate-500 block">Security Key</label>
+              <label htmlFor="admin-password" className="text-[10px] uppercase font-bold text-slate-400 block mb-1.5">Admin Password</label>
             </div>
             <div className="relative flex items-center">
               <FiLock className="absolute left-3.5 text-slate-400 w-4 h-4" />
               <input
+                id="admin-password"
                 type="password"
                 required
                 placeholder="••••••••"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="w-full bg-slate-50 border border-slate-200 rounded-xl py-2.5 pl-10 pr-3 font-semibold text-slate-800 focus:outline-none focus:border-slate-500 focus:bg-white"
+                className="w-full bg-slate-50 border border-slate-200 rounded-xl py-3 pl-10 pr-3 font-semibold text-slate-700 focus:outline-none focus:border-blue-500 focus:bg-white transition-colors"
               />
             </div>
           </div>

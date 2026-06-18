@@ -128,33 +128,35 @@ const ExplorePackages = () => {
 
             {/* Keyword Search */}
             <div>
-              <label className="text-[10px] uppercase font-bold text-slate-400 block mb-1.5">Keyword Search</label>
+              <label htmlFor="search-keyword" className="text-[10px] uppercase font-bold text-slate-400 block mb-1.5">Keyword Search</label>
               <div className="relative flex items-center">
                 <FiSearch className="absolute left-3.5 text-slate-400 w-3.5 h-3.5" />
                 <input
+                  id="search-keyword"
                   type="text"
                   placeholder="Country or destination..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-full bg-white/70 border border-slate-200 rounded-xl py-2 pl-9 pr-3 text-xs font-semibold text-slate-700 focus:outline-none focus:border-blue-500 focus:bg-white"
+                  className="w-full bg-white/70 border border-slate-200 rounded-xl py-3 pl-9 pr-3 text-xs font-semibold text-slate-700 focus:outline-none focus:border-blue-500 focus:bg-white"
                 />
               </div>
             </div>
 
             {/* Budget Limit Slider */}
             <div>
-              <label className="text-[10px] uppercase font-bold text-slate-400 block mb-1 flex justify-between">
+              <label htmlFor="budget-limit" className="text-[10px] uppercase font-bold text-slate-400 block mb-1 flex justify-between">
                 <span>Budget Limit</span>
                 <span className="text-blue-600 font-extrabold">{formatPrice(maxBudget)}</span>
               </label>
               <input
+                id="budget-limit"
                 type="range"
                 min="500"
                 max="6000"
                 step="100"
                 value={maxBudget}
                 onChange={(e) => setMaxBudget(Number(e.target.value))}
-                className="w-full h-1.5 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-blue-600"
+                className="w-full h-1.5 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-blue-600 py-3"
               />
             </div>
 
@@ -436,10 +438,10 @@ const ExplorePackages = () => {
                 {/* Key Stop List */}
                 <div className="space-y-2">
                   <h4 className="font-extrabold text-slate-800 text-sm">Route Highlights</h4>
-                  <div className="flex items-center space-x-2.5">
+                  <div className="flex flex-wrap items-center gap-2.5">
                     {selectedPkg.stops.map((stop, idx) => (
                       <React.Fragment key={stop}>
-                        <div className="bg-blue-50 border border-blue-200 rounded-xl px-3 py-1.5 font-bold text-blue-700">
+                        <div className="bg-blue-50 border border-blue-200 rounded-xl px-3 py-1.5 font-bold text-blue-700 whitespace-nowrap">
                           {stop}
                         </div>
                         {idx !== selectedPkg.stops.length - 1 && (
@@ -566,23 +568,25 @@ const ExplorePackages = () => {
               <form onSubmit={handleConfirmBooking} className="space-y-4 text-xs">
                 {/* Travel Date */}
                 <div>
-                  <label className="text-[10px] uppercase font-bold text-slate-400 block mb-1.5">Travel Date</label>
+                  <label htmlFor="travel-date" className="text-[10px] uppercase font-bold text-slate-400 block mb-1.5">Travel Date</label>
                   <input
+                    id="travel-date"
                     type="date"
                     required
                     value={bookingDate}
                     onChange={(e) => setBookingDate(e.target.value)}
-                    className="w-full bg-slate-50 border border-slate-200 rounded-xl py-2 px-3 font-semibold text-slate-700 focus:outline-none focus:border-blue-500 focus:bg-white"
+                    className="w-full bg-slate-50 border border-slate-200 rounded-xl py-3 px-3 font-semibold text-slate-700 focus:outline-none focus:border-blue-500 focus:bg-white"
                   />
                 </div>
 
                 {/* Travelers Count */}
                 <div>
-                  <label className="text-[10px] uppercase font-bold text-slate-400 block mb-1.5">Travelers</label>
+                  <label htmlFor="travelers-count" className="text-[10px] uppercase font-bold text-slate-400 block mb-1.5">Travelers</label>
                   <select
+                    id="travelers-count"
                     value={travelersCount}
                     onChange={(e) => setTravelersCount(Number(e.target.value))}
-                    className="w-full bg-slate-50 border border-slate-200 rounded-xl py-2 px-3 font-semibold text-slate-700 focus:outline-none focus:border-blue-500 focus:bg-white"
+                    className="w-full bg-slate-50 border border-slate-200 rounded-xl py-3 px-3 font-semibold text-slate-700 focus:outline-none focus:border-blue-500 focus:bg-white"
                   >
                     {[1, 2, 3, 4, 5, 6].map((num) => (
                       <option key={num} value={num}>
@@ -594,11 +598,12 @@ const ExplorePackages = () => {
 
                 {/* Select Hotel */}
                 <div>
-                  <label className="text-[10px] uppercase font-bold text-slate-400 block mb-1.5">Select Premium Hotel</label>
+                  <label htmlFor="select-hotel" className="text-[10px] uppercase font-bold text-slate-400 block mb-1.5">Select Premium Hotel</label>
                   <select
+                    id="select-hotel"
                     value={selectedHotel}
                     onChange={(e) => setSelectedHotel(e.target.value)}
-                    className="w-full bg-slate-50 border border-slate-200 rounded-xl py-2 px-3 font-semibold text-slate-700 focus:outline-none focus:border-blue-500 focus:bg-white"
+                    className="w-full bg-slate-50 border border-slate-200 rounded-xl py-3 px-3 font-semibold text-slate-700 focus:outline-none focus:border-blue-500 focus:bg-white"
                   >
                     {bookingWizardPkg.hotels.map((hotel) => (
                       <option key={hotel.name} value={hotel.name}>

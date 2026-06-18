@@ -46,7 +46,6 @@ const MapComponent = ({ stops = [], onAddStop, onRemoveStop, isInteractive = tru
   const [optimizedStops, setOptimizedStops] = useState([]);
   const [distance, setDistance] = useState(0);
   const [time, setTime] = useState("");
-  const [mapMode, setMapMode] = useState("maplibre"); // "maplibre", "google", or "svg"
   const [routeGeoJSON, setRouteGeoJSON] = useState(null);
 
   // 1. Optimize Stop Sequencing (Sorting by West-to-East Longitude)
@@ -132,133 +131,21 @@ const MapComponent = ({ stops = [], onAddStop, onRemoveStop, isInteractive = tru
                 <span>Optimized Flow</span>
               </div>
             )}
-            
-            {/* Map Mode Toggle */}
-            <div className="flex bg-slate-100 rounded-xl p-0.5 border border-slate-200/60 overflow-x-auto max-w-full">
-              <button
-                onClick={() => setMapMode("maplibre")}
-                className={`flex items-center space-x-1 px-2.5 py-1.5 rounded-lg text-[10px] font-bold transition-all whitespace-nowrap ${
-                  mapMode === "maplibre"
-                    ? "bg-white text-blue-600 shadow-sm border border-slate-200/60"
-                    : "text-slate-400 hover:text-slate-600"
-                }`}
-              >
-                <FiGlobe className="w-3 h-3" />
-                <span>MapLibre</span>
-              </button>
-              <button
-                onClick={() => setMapMode("google")}
-                className={`flex items-center space-x-1 px-2.5 py-1.5 rounded-lg text-[10px] font-bold transition-all whitespace-nowrap ${
-                  mapMode === "google"
-                    ? "bg-white text-blue-600 shadow-sm border border-slate-200/60"
-                    : "text-slate-400 hover:text-slate-600"
-                }`}
-              >
-                <FiGlobe className="w-3 h-3" />
-                <span>Google Maps</span>
-              </button>
-              <button
-                onClick={() => setMapMode("svg")}
-                className={`flex items-center space-x-1 px-2.5 py-1.5 rounded-lg text-[10px] font-bold transition-all whitespace-nowrap ${
-                  mapMode === "svg"
-                    ? "bg-white text-blue-600 shadow-sm border border-slate-200/60"
-                    : "text-slate-400 hover:text-slate-600"
-                }`}
-              >
-                <FiMap className="w-3 h-3" />
-                <span>Vector Map</span>
-              </button>
-            </div>
           </div>
         </div>
 
-        {/* MapLibre View (New Default) */}
-        {mapMode === "maplibre" && (
-          <div className="flex-1 rounded-2xl overflow-hidden min-h-[400px]">
-            <MapLibreMap
-              stops={optimizedStops}
-              selectedCity={selectedCity}
-              onCityClick={handleNodeClick}
-              routeGeoJSON={routeGeoJSON}
-              darkMode={false}
-              showAllCities={true}
-              height="100%"
-            />
-          </div>
-        )}
-
-        {/* Google Maps View */}
-        {mapMode === "google" && (
-          <div className="flex-1 rounded-2xl overflow-hidden min-h-[400px]">
-            <GoogleMapView
-              stops={stops}
-              allCities={true}
-              selectedCity={selectedCity}
-              onCitySelect={handleNodeClick}
-              isInteractive={isInteractive}
-              onAddStop={onAddStop}
-              onRemoveStop={onRemoveStop}
-              showDirections={true}
-              height="100%"
-            />
-          </div>
-        )}
-
-        {/* Custom SVG World Map Visualizer (fallback) */}
-        {mapMode === "svg" && (
-          <div className="relative flex-1 bg-slate-900 rounded-2xl border border-slate-800 shadow-inner overflow-hidden select-none flex items-center justify-center p-2 min-h-[400px]">
-            
-            {/* Grids Background overlay */}
-            <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff05_1px,transparent_1px),linear-gradient(to_bottom,#ffffff05_1px,transparent_1px)] bg-[size:24px_24px]"></div>
-            
-            <svg
-              viewBox="0 0 900 480"
-              className="w-full h-full relative z-10"
-              style={{ maxHeight: "450px" }}
-            >
-              {/* World Continent Schematics */}
-              <path d="M 120 150 Q 180 120 220 170 T 260 250 T 200 320 T 150 200 Z" fill="rgba(255, 255, 255, 0.03)" stroke="rgba(255, 255, 255, 0.05)" strokeWidth="1" />
-              <path d="M 320 120 Q 450 80 580 120 T 700 200 T 750 300 T 600 350 T 400 280 T 320 200 Z" fill="rgba(255, 255, 255, 0.03)" stroke="rgba(255, 255, 255, 0.05)" strokeWidth="1" />
-              <path d="M 380 260 Q 420 280 460 320 T 410 420 T 360 340 Z" fill="rgba(255, 255, 255, 0.02)" stroke="rgba(255, 255, 255, 0.04)" strokeWidth="1" />
-              
-              {/* DRAW ROUTES */}
-              {optimizedStops.length > 1 && (
-                <g>
-                  {optimizedStops.map((city, idx) => {
-                    if (idx === optimizedStops.length - 1) return null;
-                    const c1 = cityCoordinates[city];
-                    const c2 = cityCoordinates[optimizedStops[idx + 1]];
-                    if (!c1 || !c2) return null;
-
-                    return (
-                      <g key={`route-${idx}`}>
-                        <path d={`M ${c1.x} ${c1.y} Q ${(c1.x + c2.x)/2} ${Math.min(c1.y, c2.y) - 30} ${c2.x} ${c2.y}`} fill="none" stroke="rgba(59, 130, 246, 0.3)" strokeWidth="3" className="route-line-animated" />
-                        <path d={`M ${c1.x} ${c1.y} Q ${(c1.x + c2.x)/2} ${Math.min(c1.y, c2.y) - 30} ${c2.x} ${c2.y}`} fill="none" stroke="#10b981" strokeWidth="1.5" strokeDasharray="6 4" />
-                      </g>
-                    );
-                  })}
-                </g>
-              )}
-
-              {/* MAP MARKERS / PINS */}
-              {Object.keys(cityCoordinates).map((cityName) => {
-                const { x, y } = cityCoordinates[cityName];
-                const isSelected = selectedCity === cityName;
-                const isStop = stops.includes(cityName);
-                const stopNumber = optimizedStops.indexOf(cityName) + 1;
-
-                return (
-                  <g key={cityName} className="cursor-pointer group" onClick={() => handleNodeClick(cityName)}>
-                    <circle cx={x} cy={y} r={isSelected ? 18 : isStop ? 14 : 10} fill={isStop ? "rgba(16, 185, 129, 0.15)" : "rgba(255, 255, 255, 0.05)"} stroke={isStop ? "#10b981" : "#3b82f6"} strokeWidth={isSelected ? "2" : "1"} className="transition-all duration-300 group-hover:scale-125" />
-                    <circle cx={x} cy={y} r={isSelected ? 6 : isStop ? 5 : 4} fill={isStop ? "#10b981" : "#3b82f6"} />
-                    {isStop && <text x={x} y={y - 12} textAnchor="middle" fill="#10b981" fontSize="9" fontWeight="bold" className="bg-black select-none">{stopNumber}</text>}
-                    <text x={x} y={y + 18} textAnchor="middle" fill={isStop ? "#ffffff" : "rgba(255, 255, 255, 0.6)"} fontSize="9.5" fontWeight={isStop ? "bold" : "normal"} className="pointer-events-none select-none transition group-hover:fill-white">{cityName}</text>
-                  </g>
-                );
-              })}
-            </svg>
-          </div>
-        )}
+        {/* MapLibre View (Default) */}
+        <div className="flex-1 rounded-2xl overflow-hidden min-h-[400px]">
+          <MapLibreMap
+            stops={optimizedStops}
+            selectedCity={selectedCity}
+            onCityClick={handleNodeClick}
+            routeGeoJSON={routeGeoJSON}
+            darkMode={false}
+            showAllCities={true}
+            height="100%"
+          />
+        </div>
 
       </div>
 

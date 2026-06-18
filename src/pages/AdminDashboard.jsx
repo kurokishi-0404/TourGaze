@@ -181,19 +181,28 @@ const AdminDashboard = () => {
   // ─── Render ────────────────────────────────────────────────────────
 
   return (
-    <div className="min-h-screen pt-16">
-      <div className="max-w-[1440px] mx-auto flex">
+    <div className="min-h-screen pt-16 bg-slate-50">
+      <div className="flex w-full">
 
         {/* Mobile Sidebar Toggle */}
         <button
           onClick={() => setSidebarOpen(!sidebarOpen)}
-          className="lg:hidden fixed top-20 left-4 z-40 p-2 bg-white border border-slate-200 rounded-lg shadow-sm"
+          className="lg:hidden fixed top-20 left-4 z-[45] p-2 bg-white border border-slate-200 rounded-lg shadow-sm"
+          aria-label="Toggle Sidebar"
         >
           {sidebarOpen ? <FiX className="w-5 h-5" /> : <FiMenu className="w-5 h-5" />}
         </button>
 
+        {/* Mobile Sidebar Overlay */}
+        {sidebarOpen && (
+          <div
+            className="fixed inset-0 bg-slate-900/20 backdrop-blur-sm z-30 lg:hidden"
+            onClick={() => setSidebarOpen(false)}
+          />
+        )}
+
         {/* ── Left Sidebar ── */}
-        <aside className={`fixed lg:sticky top-16 left-0 z-30 h-[calc(100vh-4rem)] w-60 bg-white border-r border-slate-100 flex flex-col py-6 px-3 transition-transform duration-300 lg:translate-x-0 ${sidebarOpen ? "translate-x-0" : "-translate-x-full"}`}>
+        <aside className={`fixed lg:sticky top-16 left-0 z-40 h-[calc(100vh-4rem)] w-60 bg-white border-r border-slate-100 flex flex-col py-6 px-3 transition-transform duration-300 lg:translate-x-0 ${sidebarOpen ? "translate-x-0" : "-translate-x-full"}`}>
           <div className="px-3 mb-6">
             <h2 className="text-[13px] font-bold text-slate-800">Admin Panel</h2>
             <p className="text-[11px] text-slate-400 mt-0.5">Travel Operations</p>

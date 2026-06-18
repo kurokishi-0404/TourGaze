@@ -146,10 +146,10 @@ const Home = () => {
             </h2>
             
             <p className="text-white text-sm mt-8 leading-relaxed max-w-md drop-shadow-md font-medium">
-              Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.
+              Discover the world's most breathtaking destinations. Book curated travel packages with expert guides, seamless itineraries, and unforgettable experiences tailored just for you.
             </p>
 
-            <div className="mt-8 bg-white p-3 rounded-2xl shadow-2xl flex flex-col lg:flex-row items-center gap-3 w-[200%] max-w-4xl pointer-events-auto relative z-30">
+            <div className="mt-8 bg-white p-3 rounded-2xl shadow-2xl flex flex-col lg:flex-row items-center gap-3 w-full max-w-4xl pointer-events-auto relative z-30">
               <form onSubmit={handleSearch} className="flex flex-col lg:flex-row items-center justify-between gap-3 w-full">
                 {/* FROM FIELD */}
                 <div className="relative flex-1 w-full lg:w-auto">

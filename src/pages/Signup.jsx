@@ -69,80 +69,85 @@ const Signup = () => {
           
           {/* Full Name */}
           <div>
-            <label className="text-[10px] uppercase font-bold text-slate-400 block mb-1.5">Full Name</label>
+            <label htmlFor="signup-name" className="text-[10px] uppercase font-bold text-slate-400 block mb-1.5">Full Name</label>
             <div className="relative flex items-center">
               <FiUser className="absolute left-3.5 text-slate-400 w-4 h-4" />
               <input
+                id="signup-name"
                 type="text"
                 required
                 placeholder="John Doe"
                 value={fullName}
                 onChange={(e) => setFullName(e.target.value)}
-                className="w-full bg-slate-50 border border-slate-200 rounded-xl py-2.5 pl-10 pr-3 font-semibold text-slate-700 focus:outline-none focus:border-blue-500 focus:bg-white"
+                className="w-full bg-slate-50 border border-slate-200 rounded-xl py-3 pl-10 pr-3 font-semibold text-slate-700 focus:outline-none focus:border-blue-500 focus:bg-white"
               />
             </div>
           </div>
 
           {/* Email */}
           <div>
-            <label className="text-[10px] uppercase font-bold text-slate-400 block mb-1.5">Email Address</label>
+            <label htmlFor="signup-email" className="text-[10px] uppercase font-bold text-slate-400 block mb-1.5">Email Address</label>
             <div className="relative flex items-center">
               <FiMail className="absolute left-3.5 text-slate-400 w-4 h-4" />
               <input
+                id="signup-email"
                 type="email"
                 required
                 placeholder="name@example.com"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="w-full bg-slate-50 border border-slate-200 rounded-xl py-2.5 pl-10 pr-3 font-semibold text-slate-700 focus:outline-none focus:border-blue-500 focus:bg-white"
+                className="w-full bg-slate-50 border border-slate-200 rounded-xl py-3 pl-10 pr-3 font-semibold text-slate-700 focus:outline-none focus:border-blue-500 focus:bg-white"
               />
             </div>
           </div>
 
           {/* Phone Number */}
           <div>
-            <label className="text-[10px] uppercase font-bold text-slate-400 block mb-1.5">Phone Number</label>
+            <label htmlFor="signup-phone" className="text-[10px] uppercase font-bold text-slate-400 block mb-1.5">Phone Number</label>
             <div className="relative flex items-center">
               <FiPhone className="absolute left-3.5 text-slate-400 w-4 h-4" />
               <input
+                id="signup-phone"
                 type="tel"
                 required
                 placeholder="+1 555-0199"
                 value={phone}
                 onChange={(e) => setPhone(e.target.value)}
-                className="w-full bg-slate-50 border border-slate-200 rounded-xl py-2.5 pl-10 pr-3 font-semibold text-slate-700 focus:outline-none focus:border-blue-500 focus:bg-white"
+                className="w-full bg-slate-50 border border-slate-200 rounded-xl py-3 pl-10 pr-3 font-semibold text-slate-700 focus:outline-none focus:border-blue-500 focus:bg-white"
               />
             </div>
           </div>
 
           {/* Password */}
           <div>
-            <label className="text-[10px] uppercase font-bold text-slate-400 block mb-1.5">Password</label>
+            <label htmlFor="signup-password" className="text-[10px] uppercase font-bold text-slate-400 block mb-1.5">Password</label>
             <div className="relative flex items-center">
               <FiLock className="absolute left-3.5 text-slate-400 w-4 h-4" />
               <input
+                id="signup-password"
                 type="password"
                 required
                 placeholder="At least 6 characters"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="w-full bg-slate-50 border border-slate-200 rounded-xl py-2.5 pl-10 pr-3 font-semibold text-slate-700 focus:outline-none focus:border-blue-500 focus:bg-white"
+                className="w-full bg-slate-50 border border-slate-200 rounded-xl py-3 pl-10 pr-3 font-semibold text-slate-700 focus:outline-none focus:border-blue-500 focus:bg-white"
               />
             </div>
           </div>
 
           {/* Confirm Password */}
           <div>
-            <label className="text-[10px] uppercase font-bold text-slate-400 block mb-1.5">Confirm Password</label>
+            <label htmlFor="signup-confirm" className="text-[10px] uppercase font-bold text-slate-400 block mb-1.5">Confirm Password</label>
             <div className="relative flex items-center">
               <FiLock className="absolute left-3.5 text-slate-400 w-4 h-4" />
               <input
+                id="signup-confirm"
                 type="password"
                 required
                 placeholder="Confirm password"
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
-                className="w-full bg-slate-50 border border-slate-200 rounded-xl py-2.5 pl-10 pr-3 font-semibold text-slate-700 focus:outline-none focus:border-blue-500 focus:bg-white"
+                className="w-full bg-slate-50 border border-slate-200 rounded-xl py-3 pl-10 pr-3 font-semibold text-slate-700 focus:outline-none focus:border-blue-500 focus:bg-white"
               />
             </div>
           </div>

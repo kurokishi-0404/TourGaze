@@ -22,7 +22,6 @@ const TravelMap = () => {
     customTrips.length > 0 ? customTrips[0].id : "default"
   );
 
-  const [viewMode, setViewMode] = useState("maplibre"); // "maplibre" | "google" | "classic"
   const [selectedCity, setSelectedCity] = useState(null);
   
   const [routeGeoJSON, setRouteGeoJSON] = useState(null);
@@ -229,49 +228,6 @@ const TravelMap = () => {
           Plan multi-city trips, visualize real travel routes, and explore nearby attractions powered by OpenStreetMap and OpenRouteService.
         </motion.p>
 
-        {/* View Mode Toggle */}
-        <motion.div
-          initial={{ opacity: 0, scale: 0.95 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ delay: 0.2 }}
-          className="flex justify-center pt-2"
-        >
-          <div className="inline-flex bg-slate-100 rounded-2xl p-1 border border-slate-200/60 overflow-x-auto max-w-full">
-            <button
-              onClick={() => setViewMode("maplibre")}
-              className={`flex items-center space-x-2 px-5 py-2.5 rounded-xl text-xs font-bold transition-all whitespace-nowrap ${
-                viewMode === "maplibre"
-                  ? "bg-white text-blue-600 shadow-md border border-slate-200/60"
-                  : "text-slate-400 hover:text-slate-600"
-              }`}
-            >
-              <FiGlobe className="w-4 h-4" />
-              <span>MapLibre</span>
-            </button>
-            <button
-              onClick={() => setViewMode("google")}
-              className={`flex items-center space-x-2 px-5 py-2.5 rounded-xl text-xs font-bold transition-all whitespace-nowrap ${
-                viewMode === "google"
-                  ? "bg-white text-blue-600 shadow-md border border-slate-200/60"
-                  : "text-slate-400 hover:text-slate-600"
-              }`}
-            >
-              <FiGlobe className="w-4 h-4" />
-              <span>Google Maps</span>
-            </button>
-            <button
-              onClick={() => setViewMode("classic")}
-              className={`flex items-center space-x-2 px-5 py-2.5 rounded-xl text-xs font-bold transition-all whitespace-nowrap ${
-                viewMode === "classic"
-                  ? "bg-white text-blue-600 shadow-md border border-slate-200/60"
-                  : "text-slate-400 hover:text-slate-600"
-              }`}
-            >
-              <FiMap className="w-4 h-4" />
-              <span>Classic View</span>
-            </button>
-          </div>
-        </motion.div>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
@@ -455,44 +411,21 @@ const TravelMap = () => {
             transition={{ delay: 0.1 }}
             className="w-full relative"
           >
-            {viewMode === "maplibre" && (
-              <MapLibreMap
-                stops={routeStops}
-                routeGeoJSON={routeGeoJSON}
-                attractions={activeLayers.attractions ? attractionsData : []}
-                selectedCity={selectedCity}
-                onCityClick={setSelectedCity}
-                showHeatmap={activeLayers.heatmap}
-                showAllCities={activeLayers.destinations}
-                darkMode={true}
-                height="500px"
-              />
-            )}
-            
-            {viewMode === "google" && (
-              <GoogleMapView
-                stops={routeStops}
-                allCities={activeLayers.destinations}
-                selectedCity={selectedCity}
-                onCitySelect={setSelectedCity}
-                isInteractive={false}
-                showDirections={activeLayers.routes}
-                height="500px"
-              />
-            )}
-            
-            {viewMode === "classic" && (
-              <div className="h-[500px]">
-                <MapComponent
-                  stops={routeStops}
-                  isInteractive={false}
-                />
-              </div>
-            )}
+            <MapLibreMap
+              stops={routeStops}
+              routeGeoJSON={routeGeoJSON}
+              attractions={activeLayers.attractions ? attractionsData : []}
+              selectedCity={selectedCity}
+              onCityClick={setSelectedCity}
+              showHeatmap={activeLayers.heatmap}
+              showAllCities={activeLayers.destinations}
+              darkMode={true}
+              height="500px"
+            />
             
             {/* Overlay Panel for City Details & Attractions */}
             <AnimatePresence>
-              {selectedCity && viewMode === "maplibre" && (
+              {selectedCity && (
                 <motion.div
                   initial={{ opacity: 0, scale: 0.9, y: 20 }}
                   animate={{ opacity: 1, scale: 1, y: 0 }}

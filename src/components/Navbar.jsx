@@ -86,7 +86,7 @@ const Navbar = () => {
   return (
     <>
       <nav ref={dropdownRef} className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-xl border-b border-slate-100 transition-all duration-300">
-        <div className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8">
+        <div className={`${isAdmin ? "w-full" : "max-w-[1440px] mx-auto"} px-4 sm:px-6 lg:px-8`}>
           <div className="flex items-center justify-between h-16">
 
             {/* Logo */}
@@ -382,7 +382,7 @@ const Navbar = () => {
               exit={{ opacity: 0, height: 0 }}
               className="lg:hidden border-t border-slate-100 bg-white overflow-hidden shadow-lg"
             >
-              <div className="px-4 pt-3 pb-6 space-y-1 max-h-[80vh] overflow-y-auto">
+              <div className="px-4 pt-3 pb-6 space-y-1 max-h-[80vh] overflow-y-auto overscroll-contain">
 
                 {/* Primary */}
                 {!isAdmin && (

@@ -105,37 +105,39 @@ const BookingDashboard = () => {
                 {/* Status Timeline */}
                 <div>
                   <p className="text-[11px] uppercase tracking-wider font-semibold text-slate-500 mb-4">Booking Progress</p>
-                  <div className="relative flex items-center justify-between">
-                    {/* Background track */}
-                    <div className="absolute left-0 right-0 top-4 h-[3px] bg-slate-100 rounded pointer-events-none"></div>
-                    {/* Progress fill */}
-                    <div
-                      className="absolute left-0 top-4 h-[3px] bg-gradient-to-r from-blue-500 to-emerald-500 rounded transition-all duration-700 pointer-events-none"
-                      style={{ width: `${(statusIdx / (statusSteps.length - 1)) * 100}%` }}
-                    ></div>
+                  <div className="overflow-x-auto pb-4">
+                    <div className="relative flex items-center justify-between min-w-[500px]">
+                      {/* Background track */}
+                      <div className="absolute left-0 right-0 top-4 h-[3px] bg-slate-100 rounded pointer-events-none"></div>
+                      {/* Progress fill */}
+                      <div
+                        className="absolute left-0 top-4 h-[3px] bg-gradient-to-r from-blue-500 to-emerald-500 rounded transition-all duration-700 pointer-events-none"
+                        style={{ width: `${(statusIdx / (statusSteps.length - 1)) * 100}%` }}
+                      ></div>
 
-                    {statusSteps.map((step, idx) => {
-                      const isDone = idx <= statusIdx;
-                      const isCurrent = idx === statusIdx;
-                      return (
-                        <div key={step} className="flex flex-col items-center relative z-10">
-                          <div className={`w-8 h-8 rounded-full flex items-center justify-center border-2 transition-all duration-500 text-[11px] font-bold ${
-                            isCurrent
-                              ? "bg-blue-600 border-blue-600 text-white shadow-md shadow-blue-500/30"
-                              : isDone
-                              ? "bg-emerald-500 border-emerald-500 text-white"
-                              : "bg-white border-slate-200 text-slate-400"
-                          }`}>
-                            {isDone ? <FiCheck className="w-4 h-4" /> : idx + 1}
+                      {statusSteps.map((step, idx) => {
+                        const isDone = idx <= statusIdx;
+                        const isCurrent = idx === statusIdx;
+                        return (
+                          <div key={step} className="flex flex-col items-center relative z-10">
+                            <div className={`w-8 h-8 rounded-full flex items-center justify-center border-2 transition-all duration-500 text-[11px] font-bold ${
+                              isCurrent
+                                ? "bg-blue-600 border-blue-600 text-white shadow-md shadow-blue-500/30"
+                                : isDone
+                                ? "bg-emerald-500 border-emerald-500 text-white"
+                                : "bg-white border-slate-200 text-slate-400"
+                            }`}>
+                              {isDone ? <FiCheck className="w-4 h-4" /> : idx + 1}
+                            </div>
+                            <span className={`text-[10px] mt-2 font-semibold text-center max-w-[70px] leading-tight ${
+                              isCurrent ? "text-blue-600" : isDone ? "text-slate-700" : "text-slate-400"
+                            }`}>
+                              {step}
+                            </span>
                           </div>
-                          <span className={`text-[10px] mt-2 font-semibold text-center max-w-[70px] leading-tight ${
-                            isCurrent ? "text-blue-600" : isDone ? "text-slate-700" : "text-slate-400"
-                          }`}>
-                            {step}
-                          </span>
-                        </div>
-                      );
-                    })}
+                        );
+                      })}
+                    </div>
                   </div>
                 </div>
 
@@ -195,20 +197,22 @@ const BookingDashboard = () => {
                       <h5 className="text-[13px] font-bold text-slate-700">Modify Reservation</h5>
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <div>
-                          <label className="text-[11px] uppercase font-semibold text-slate-500 block mb-1.5">Travel Date</label>
+                          <label htmlFor={`edit-date-${bk.id}`} className="text-[11px] uppercase font-semibold text-slate-500 block mb-1.5">Travel Date</label>
                           <input
+                            id={`edit-date-${bk.id}`}
                             type="date"
                             value={editDate}
                             onChange={(e) => setEditDate(e.target.value)}
-                            className="w-full bg-slate-50 border border-slate-200 rounded-lg py-2.5 px-3 text-[13px] font-medium text-slate-700 focus:outline-none focus:border-blue-500"
+                            className="w-full bg-slate-50 border border-slate-200 rounded-lg py-3 px-3 text-[13px] font-medium text-slate-700 focus:outline-none focus:border-blue-500"
                           />
                         </div>
                         <div>
-                          <label className="text-[11px] uppercase font-semibold text-slate-500 block mb-1.5">Hotel</label>
+                          <label htmlFor={`edit-hotel-${bk.id}`} className="text-[11px] uppercase font-semibold text-slate-500 block mb-1.5">Hotel</label>
                           <select
+                            id={`edit-hotel-${bk.id}`}
                             value={editHotel}
                             onChange={(e) => setEditHotel(e.target.value)}
-                            className="w-full bg-slate-50 border border-slate-200 rounded-lg py-2.5 px-3 text-[13px] font-medium text-slate-700 focus:outline-none"
+                            className="w-full bg-slate-50 border border-slate-200 rounded-lg py-3 px-3 text-[13px] font-medium text-slate-700 focus:outline-none"
                           >
                             {(hotelOptionsList[bk.packageId] || [bk.hotel]).map((opt) => (
                               <option key={opt} value={opt}>{opt}</option>

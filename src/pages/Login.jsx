@@ -60,16 +60,17 @@ const Login = () => {
           
           {/* Email */}
           <div>
-            <label className="text-[10px] uppercase font-bold text-slate-400 block mb-1.5">Email Address</label>
+            <label htmlFor="login-email" className="text-[10px] uppercase font-bold text-slate-400 block mb-1.5">Email Address</label>
             <div className="relative flex items-center">
               <FiMail className="absolute left-3.5 text-slate-400 w-4 h-4" />
               <input
+                id="login-email"
                 type="email"
                 required
                 placeholder="name@example.com"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="w-full bg-slate-50 border border-slate-200 rounded-xl py-2.5 pl-10 pr-3 font-semibold text-slate-700 focus:outline-none focus:border-blue-500 focus:bg-white"
+                className="w-full bg-slate-50 border border-slate-200 rounded-xl py-3 pl-10 pr-3 font-semibold text-slate-700 focus:outline-none focus:border-blue-500 focus:bg-white"
               />
             </div>
           </div>
@@ -77,7 +78,7 @@ const Login = () => {
           {/* Password */}
           <div>
             <div className="flex justify-between items-center mb-1.5">
-              <label className="text-[10px] uppercase font-bold text-slate-400 block">Password</label>
+              <label htmlFor="login-password" className="text-[10px] uppercase font-bold text-slate-400 block">Password</label>
               <a href="#" onClick={(e) => e.preventDefault()} className="text-[9px] font-bold text-blue-600 hover:underline">
                 Forgot Password?
               </a>
@@ -85,12 +86,13 @@ const Login = () => {
             <div className="relative flex items-center">
               <FiLock className="absolute left-3.5 text-slate-400 w-4 h-4" />
               <input
+                id="login-password"
                 type="password"
                 required
                 placeholder="••••••••"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="w-full bg-slate-50 border border-slate-200 rounded-xl py-2.5 pl-10 pr-3 font-semibold text-slate-700 focus:outline-none focus:border-blue-500 focus:bg-white"
+                className="w-full bg-slate-50 border border-slate-200 rounded-xl py-3 pl-10 pr-3 font-semibold text-slate-700 focus:outline-none focus:border-blue-500 focus:bg-white"
               />
             </div>
           </div>
